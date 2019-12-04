@@ -5,13 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Welcome</div>
+                <div class="card-header">About Us</div>
 
                 <div class="card-body">
-                    Welcome to UltanMedicalCentre.
-
-                    <br/>
-                    Learn more <a href="{{ route('about') }}">about us</a>
+                    This is the about page
                 </div>
             </div>
         </div>

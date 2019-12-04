@@ -14,7 +14,11 @@
                         </div>
                     @endif
 
-                    You are logged in as a doctor!
+                    Hi {{ Auth::user()->name }}.
+                    </br>
+                    You are logged in as a doctor.
+
+                    Start date: {{ Auth::user()->doctor->start_date }}
                 </div>
             </div>
         </div>
