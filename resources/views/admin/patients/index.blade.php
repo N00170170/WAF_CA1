@@ -27,7 +27,7 @@
                       <td>{{ $patient->user->name }}</td>
                       <td>{{ $patient->user->address }}</td>
                       <td>{{ $patient->user->email }}</td>
-                      <td>{{ $patient->insurance }}</td>
+                      <td>@if($patient->hasInsurance) <a href="{{ route('admin.insurancecompanies.show', $patient->insurance_company->id) }}">{{ $patient->insurance_company->company_name }}</a> @else None @endif</td>
                       <td>
                         <a href="{{ route('admin.patients.show', $patient->id) }}" class="btn btn-default">View</a>
                         <a href="{{ route('admin.patients.edit', $patient->id) }}" class="btn btn-warning">Edit</a>

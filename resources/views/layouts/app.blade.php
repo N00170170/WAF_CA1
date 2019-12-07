@@ -42,6 +42,9 @@
                       <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.visits.index') }}">{{ __('Visits') }}</a>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.insurancecompanies.index') }}">{{ __('Insurance Companies') }}</a>
+                      </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

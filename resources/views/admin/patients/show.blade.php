@@ -23,10 +23,21 @@
                     <td>Email</td>
                     <td>{{ $patient->user->email }}</td>
                   </tr>
+                  @if($patient->hasInsurance)
+                  <tr>
+                    <td>Insurance Company</td>
+                    <td><a href="{{ route('admin.insurancecompanies.show', $patient->insurance_company->id) }}">{{ $patient->insurance_company->company_name }}</a></td>
+                  </tr>
+                  <tr>
+                    <td>Policy Number</td>
+                    <td>{{ $patient->policy_number }}</td>
+                  </tr>
+                  @else
                   <tr>
                     <td>Insurance</td>
-                    <td>{{ $patient->insurance }}</td>
+                    <td>This patient does not have insurance</td>
                   </tr>
+                  @endif
                 </tbody>
               </table>
 

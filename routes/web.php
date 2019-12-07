@@ -47,6 +47,14 @@ Route::get('/admin/visits/{id}/edit', 'Admin\VisitController@edit')->name('admin
 Route::put('/admin/visits/{id}', 'Admin\VisitController@update')->name('admin.visits.update');
 Route::delete('/admin/visits/{id}', 'Admin\VisitController@destroy')->name('admin.visits.destroy');
 
+Route::get('/admin/insurance-companies', 'Admin\InsuranceCompanyController@index')->name('admin.insurancecompanies.index');
+Route::get('/admin/insurance-companies/create', 'Admin\InsuranceCompanyController@create')->name('admin.insurancecompanies.create');
+Route::get('/admin/insurance-companies/{id}', 'Admin\InsuranceCompanyController@show')->name('admin.insurancecompanies.show');
+Route::post('/admin/insurance-companies/store', 'Admin\InsuranceCompanyController@store')->name('admin.insurancecompanies.store');
+Route::get('/admin/insurance-companies/{id}/edit', 'Admin\InsuranceCompanyController@edit')->name('admin.insurancecompanies.edit');
+Route::put('/admin/insurance-companies/{id}', 'Admin\InsuranceCompanyController@update')->name('admin.insurancecompanies.update');
+Route::delete('/admin/insurance-companies/{id}', 'Admin\InsuranceCompanyController@destroy')->name('admin.insurancecompanies.destroy');
+
 //Doctor routes [not working yet]
 Route::get('/doctor/visits', 'Doctor\VisitController@index')->name('doctor.visits.index');
 Route::get('/doctor/visits/create', 'Doctor\VisitController@create')->name('doctor.visits.create');

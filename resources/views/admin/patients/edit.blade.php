@@ -38,8 +38,27 @@
                 <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $patient->user->email) }}" />
               </div>
               <div class="form-group">
-                <label for="insurance">Insurance</label>
-                <input type="text" class="form-control" id="insurance" name="insurance" value="{{ old('insurance', $patient->insurance) }}" />
+                <label for="hasinsurance">Insurance</label><br>
+                <input type="radio" name="hasinsurance" value="1" onclick="show();" @if($patient->hasInsurance) checked="true" @endif> Yes
+                <input type="radio" name="hasinsurance" value="0" onclick="hide();" @if(!$patient->hasInsurance) checked="true" @endif> No<br>
+              </div>
+
+              <!-- Insurance options -->
+              <div id="insuranceoptions">
+                <div class="form-group">
+                  <label for="insurancecompany">Insurance Company</label>
+                  <select class="form-control" name="insurance_company_id">
+                    @foreach ($insurancecompanies as $insurancecompany)
+                      <option value="{{ $insurancecompany->id }}" {{ (old('insurance_company_id', $patient->insurance_company->id) == $insurancecompany->id) ? "selected" : "" }} >
+                        {{ $insurancecompany->company_name }}
+                      </option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="policy_number">Policy Number</label>
+                  <input type="text" class="form-control" id="policy_number" name="policy_number" value="{{ old('policy_number', $patient->policy_number) }}" />
+                </div>
               </div>
               <a href="{{ route('admin.patients.index') }}" class="btn btn-outline">Cancel</a>
               <button type="submit" class="btn btn-primary float-right">Submit</button>
@@ -48,6 +67,17 @@
         </div>
       </div>
     </div>
+    <script>
+      function hide(){
+        document.getElementById('insuranceoptions').style.display ='none';
+      }
+      function show(){
+        document.getElementById('insuranceoptions').style.display = 'block';
+      }
+      @if(!$patient->hasInsurance)
+        hide();
+      @endif
+    </script>
   </div>
 
 

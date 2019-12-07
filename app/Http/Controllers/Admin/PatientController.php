@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Patient;
 use App\User;
 use App\Role;
+use App\InsuranceCompany;
 
 
 class PatientController extends Controller
@@ -38,7 +39,11 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('admin.patients.create');
+        $insurancecompanies = InsuranceCompany::all();
+
+        return view('admin.patients.create')->with([
+          'insurancecompanies' => $insurancecompanies
+        ]);
     }
 
     /**
@@ -54,7 +59,10 @@ class PatientController extends Controller
           'address' => 'required|max:191',
           'phone' => 'required|numeric',
           'email' => 'required|email|max:191|unique:users',
-          'insurance' => 'required|max:191'
+          'hasinsurance' => 'required|boolean',
+          'insurance_company_id' => 'numeric',
+          'policy_number' => ''
+
         ]);
 
         $role_patient = Role::where('name', 'patient')->first();
@@ -71,7 +79,12 @@ class PatientController extends Controller
 
 
         $patient = new Patient();
-        $patient->insurance = $request->input('insurance');
+        $patient->hasinsurance = $request->input('hasinsurance');
+        //check whether insurace options should be inserted or not
+        if ($patient->hasinsurance) {
+          $patient->insurance_company_id = $request->input('insurance_company_id');
+          $patient->policy_number = $request->input('policy_number');
+        }
         $patient->user_id = $user->id;
 
         $patient->save();
@@ -102,10 +115,13 @@ class PatientController extends Controller
      */
     public function edit($id)
     {
+
       $patient = Patient::findOrFail($id);
+      $insurancecompanies = InsuranceCompany::all();
 
       return view('admin.patients.edit')->with([
-        'patient' => $patient
+        'patient' => $patient,
+        'insurancecompanies' => $insurancecompanies
       ]);
     }
 
@@ -126,7 +142,9 @@ class PatientController extends Controller
         'address' => 'required|max:191',
         'phone' => 'required',
         'email' => 'required|email|max:191|unique:users,email,' . $user->id,
-        'insurance' => 'required'
+        'hasinsurance' => 'required|boolean',
+        'insurance_company_id' => 'numeric',
+        'policy_number' => ''
       ]);
 
       $user->name = $request->input('name');
@@ -137,7 +155,16 @@ class PatientController extends Controller
 
       $user->save();
 
-      $patient->insurance = $request->input('insurance');
+      $patient->hasinsurance = $request->input('hasinsurance');
+      //check whether insurace options should be inserted or not
+      if ($patient->hasinsurance) {
+        $patient->insurance_company_id = $request->input('insurance_company_id');
+        $patient->policy_number = $request->input('policy_number');
+      } else {
+        //nulling values in case the patient previously had insurance options set
+        $patient->insurance_company_id = null;
+        $patient->policy_number = null;
+      }
 
       $patient->save();
 
