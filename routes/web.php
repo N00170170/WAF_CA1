@@ -13,7 +13,7 @@
 
 Route::get('/', 'PageController@welcome')->name('welcome');
 Route::get('/about', 'PageController@about')->name('about');
-Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register'); //Override default register route
 
 Auth::routes();
 

@@ -81,6 +81,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //Commented out as could not get if statement to work, used code structure from PatientsController for creating a patient instead
         // $user = User::create([
         //     'name' => $data['name'],
         //     'email' => $data['email'],
@@ -102,6 +103,7 @@ class RegisterController extends Controller
         //
         // return $user;
 
+        //Create user and save
         $user = new User();
         $user->name = $data['name'];
         $user->address = $data['address'];
@@ -110,6 +112,7 @@ class RegisterController extends Controller
         $user->password = Hash::make($data['password']);
         $user->save();
 
+        //Create patient and save
         $patient = new Patient();
         $patient->user_id = $user->id;
         $patient->hasinsurance = $data['hasinsurance'];
@@ -118,9 +121,9 @@ class RegisterController extends Controller
           $patient->insurance_company_id = $data['insurance_company_id'];
           $patient->policy_number = $data['policy_number'];
         }
-
         $patient->save();
 
+        //Attach patient role to the user
         $user->roles()->attach(Role::where('name', 'patient')->first());
 
         return $user;
