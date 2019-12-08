@@ -55,7 +55,7 @@ Route::get('/admin/insurance-companies/{id}/edit', 'Admin\InsuranceCompanyContro
 Route::put('/admin/insurance-companies/{id}', 'Admin\InsuranceCompanyController@update')->name('admin.insurancecompanies.update');
 Route::delete('/admin/insurance-companies/{id}', 'Admin\InsuranceCompanyController@destroy')->name('admin.insurancecompanies.destroy');
 
-//Doctor routes [not working yet]
+// Doctor routes
 Route::get('/doctor/visits', 'Doctor\VisitController@index')->name('doctor.visits.index');
 Route::get('/doctor/visits/create', 'Doctor\VisitController@create')->name('doctor.visits.create');
 Route::get('/doctor/visits/{id}', 'Doctor\VisitController@show')->name('doctor.visits.show');
@@ -63,8 +63,12 @@ Route::post('/doctor/visits/store', 'Doctor\VisitController@store')->name('docto
 Route::get('/doctor/visits/{id}/edit', 'Doctor\VisitController@edit')->name('doctor.visits.edit');
 Route::put('/doctor/visits/{id}', 'Doctor\VisitController@update')->name('doctor.visits.update');
 Route::delete('/doctor/visits/{id}', 'Doctor\VisitController@destroy')->name('doctor.visits.destroy'); //do we need?
+Route::get('/doctor/patients/{id}/visits', 'Doctor\VisitController@visitswithpatient')->name('doctor.visits.patient.index');
+Route::get('/doctor/patients', 'Doctor\VisitController@mypatients')->name('doctor.patients.index');
 
-//Patient routes [not working yet]
+//Patient routes
 Route::get('/patient/visits', 'Patient\VisitController@index')->name('patient.visits.index');
 Route::get('/patient/visits/{id}', 'Patient\VisitController@show')->name('patient.visits.show');
 Route::delete('/patient/visits/{id}', 'Patient\VisitController@destroy')->name('patient.visits.destroy'); //do we need?
+Route::get('/patient/doctors', 'Patient\VisitController@mydoctors')->name('patient.doctors.index');
+Route::get('/patient/doctors/{id}/visits', 'Patient\VisitController@visitswithdoctor')->name('patient.visits.doctor.index');

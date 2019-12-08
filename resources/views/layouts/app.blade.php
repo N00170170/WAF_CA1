@@ -33,6 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                      @if(Auth::user() && Auth::user()->hasRole('admin'))
                       <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.doctors.index') }}">{{ __('Doctors') }}</a>
                       </li>
@@ -45,6 +46,21 @@
                       <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.insurancecompanies.index') }}">{{ __('Insurance Companies') }}</a>
                       </li>
+                      @elseif(Auth::user() && Auth::user()->hasRole('doctor'))
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ route('doctor.visits.index') }}">{{ __('My Visits') }}</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ route('doctor.patients.index') }}">{{ __('My Patients') }}</a>
+                      </li>
+                      @elseif(Auth::user() && Auth::user()->hasRole('patient'))
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ route('patient.visits.index') }}">{{ __('My Visits') }}</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ route('patient.doctors.index') }}">{{ __('My Doctors') }}</a>
+                      </li>
+                      @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
