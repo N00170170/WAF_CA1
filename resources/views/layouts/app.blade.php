@@ -18,6 +18,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}" />
+
+    <!-- FontAwesome -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- <link href="/css/all.css" rel="stylesheet"> -->
+    <!-- <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}"> -->
 </head>
 <body>
     <div id="app">

@@ -25,8 +25,8 @@
                 </thead>
                 <tbody>
                   @foreach ($visits as $visit)
-                    <tr data-id="{{ $visit->id }}">
-                      <td>{{ $visit->date }}</td>
+                    <tr data-id="{{ $visit->id }}" @if($visit->cancelled) class="table-danger" @endif>
+                      <td>{{ $visit->date }} @if($visit->cancelled) <span class="badge badge-danger" style="padding: 8px;margin: 0 4px">CANCELLED</span> @endif</td>
                       <td>{{ $visit->time }}</td>
                       <td>{{ $visit->duration }}</td>
                       <td>{{ $visit->patient->user->name }}</td>
@@ -36,10 +36,14 @@
                       <td>
                         <a href="{{ route('admin.visits.show', $visit->id) }}" class="btn btn-default">View</a>
                         <a href="{{ route('admin.visits.edit', $visit->id) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ route('admin.visits.cancel', $visit->id) }}" class="btn @if($visit->cancelled) disabled @endif btn-danger">Cancel</a>
                         <form style="display:inline-block" method="POST" action="{{ route('admin.visits.destroy', $visit->id) }}">
                           <input type="hidden" name="_method" value="DELETE">
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                          <button type="submit" class="form-control btn btn-danger">Delete</a>
+                          <button type="submit" class="btn btn-default">
+                            <i class="fas fa-minus-circle delete-icon"></i>
+                          </button>
+
                         </form>
                       </td>
                     </tr>

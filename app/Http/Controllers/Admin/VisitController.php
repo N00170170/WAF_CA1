@@ -160,4 +160,14 @@ class VisitController extends Controller
 
       return redirect()->route('admin.visits.index');
     }
+
+    public function cancel($id)
+    {
+      $visit = Visit::findOrFail($id);
+
+      $visit->cancelled = true;
+      $visit->save();
+
+      return redirect()->route('admin.visits.index');
+    }
 }

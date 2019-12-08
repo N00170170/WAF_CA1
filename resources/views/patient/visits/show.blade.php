@@ -6,7 +6,7 @@
       <div class="col-md-8 col-md-offset-2">
         <div class="card">
           <div class="card-header">
-            Visit: {{ $doctor->user->name }}
+            Visit with {{ $doctor->user->name }} @if($visit->cancelled) <span class="badge badge-danger" style="padding: 8px;margin: 0 4px">CANCELLED</span> @endif
           </div>
           <div class="card-body">
               <table class="table table-hover">
@@ -34,14 +34,8 @@
 
                 </tbody>
               </table>
-
               <a href="{{ route('patient.visits.index') }}" class="btn btn-default">Back</a>
-              <form style="display:inline-block" method="POST" action="{{ route('doctor.visits.destroy', $visit->id) }}">
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <button type="submit" class="form-control btn btn-danger">Delete</a>
-              </form>
-
+              <a href="{{ route('patient.visits.cancel', $visit->id) }}" class="btn @if($visit->cancelled) disabled @endif btn-danger">Cancel</a>
           </div>
         </div>
       </div>

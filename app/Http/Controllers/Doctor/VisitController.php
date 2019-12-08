@@ -163,15 +163,15 @@ class VisitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function cancel($id)
-    {
-      $visit = Visit::findOrFail($id);
+     public function cancel($id)
+     {
+       $visit = Visit::findOrFail($id);
 
-      $visit->status = 'cancelled';
-      $visit->save();
+       $visit->cancelled = true;
+       $visit->save();
 
-      return redirect()->route('doctor.visits.index');
-    }
+       return redirect()->route('doctor.visits.index');
+     }
 
     public function mypatients()
     {

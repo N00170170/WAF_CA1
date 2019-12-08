@@ -104,10 +104,10 @@ class VisitController extends Controller
     {
       $visit = Visit::findOrFail($id);
 
-      $visit->status = 'cancelled';
+      $visit->cancelled = true;
       $visit->save();
 
-      return redirect()->route('doctor.visits.index');
+      return redirect()->route('patient.visits.index');
     }
 
     public function mydoctors()

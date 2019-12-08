@@ -46,6 +46,7 @@ Route::post('/admin/visits/store', 'Admin\VisitController@store')->name('admin.v
 Route::get('/admin/visits/{id}/edit', 'Admin\VisitController@edit')->name('admin.visits.edit');
 Route::put('/admin/visits/{id}', 'Admin\VisitController@update')->name('admin.visits.update');
 Route::delete('/admin/visits/{id}', 'Admin\VisitController@destroy')->name('admin.visits.destroy');
+Route::get('/admin/visits/cancel/{id}', 'Admin\VisitController@cancel')->name('admin.visits.cancel');
 
 Route::get('/admin/insurance-companies', 'Admin\InsuranceCompanyController@index')->name('admin.insurancecompanies.index');
 Route::get('/admin/insurance-companies/create', 'Admin\InsuranceCompanyController@create')->name('admin.insurancecompanies.create');
@@ -65,6 +66,7 @@ Route::put('/doctor/visits/{id}', 'Doctor\VisitController@update')->name('doctor
 Route::delete('/doctor/visits/{id}', 'Doctor\VisitController@destroy')->name('doctor.visits.destroy'); //do we need?
 Route::get('/doctor/patients/{id}/visits', 'Doctor\VisitController@visitswithpatient')->name('doctor.visits.patient.index');
 Route::get('/doctor/patients', 'Doctor\VisitController@mypatients')->name('doctor.patients.index');
+Route::get('/doctor/visits/cancel/{id}', 'Doctor\VisitController@cancel')->name('doctor.visits.cancel');
 
 //Patient routes
 Route::get('/patient/visits', 'Patient\VisitController@index')->name('patient.visits.index');
@@ -72,3 +74,4 @@ Route::get('/patient/visits/{id}', 'Patient\VisitController@show')->name('patien
 Route::delete('/patient/visits/{id}', 'Patient\VisitController@destroy')->name('patient.visits.destroy'); //do we need?
 Route::get('/patient/doctors', 'Patient\VisitController@mydoctors')->name('patient.doctors.index');
 Route::get('/patient/doctors/{id}/visits', 'Patient\VisitController@visitswithdoctor')->name('patient.visits.doctor.index');
+Route::get('/patient/visits/cancel/{id}', 'Patient\VisitController@cancel')->name('patient.visits.cancel');
