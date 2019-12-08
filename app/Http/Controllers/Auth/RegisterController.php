@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Role;
+use App\Patient;
+use App\InsuranceCompany;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -41,6 +43,16 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    //Override the default Laravel vendor register function to pass through insurance companies
+    public function showRegistrationForm()
+    {
+      $insurancecompanies = InsuranceCompany::all();
+
+      return view('auth.register')->with([
+        'insurancecompanies' => $insurancecompanies
+      ]);
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -49,11 +61,16 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+      return Validator::make($data, [
+          'name' => ['required', 'string', 'max:255'],
+          'address' => ['required'],
+          'phone' => ['required', 'string'],
+          'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+          'hasinsurance' => ['required', 'boolean'],
+          'insurance_company_id' => ['numeric'],
+          'policy_number' => [],
+          'password' => ['required', 'string', 'min:8', 'confirmed'],
+      ]);
     }
 
     /**
@@ -64,11 +81,45 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        // $user = User::create([
+        //     'name' => $data['name'],
+        //     'email' => $data['email'],
+        //     'address' => $data['address'],
+        //     'phone' => $data['phone'],
+        //     'password' => Hash::make($data['password']),
+        // ]);
+        //
+        // $patient = Patient::create([
+        //     'user_id' => $user->id,
+        //     'hasInsurance' => $data['hasinsurance'],
+        //     @if($data['hasInsurance']) {
+        //       'insurance_company_id' => $data['insurance_company_id'],
+        //       'policy_number' => $data['policy_number'],
+        //     }
+        // ]);
+        //
+        // $user->roles()->attach(Role::where('name', 'patient')->first());
+        //
+        // return $user;
+
+        $user = new User();
+        $user->name = $data['name'];
+        $user->address = $data['address'];
+        $user->phone = $data['phone'];
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
+        $user->save();
+
+        $patient = new Patient();
+        $patient->user_id = $user->id;
+        $patient->hasinsurance = $data['hasinsurance'];
+        //check whether insurace options should be inserted or not
+        if ($patient->hasinsurance) {
+          $patient->insurance_company_id = $data['insurance_company_id'];
+          $patient->policy_number = $data['policy_number'];
+        }
+
+        $patient->save();
 
         $user->roles()->attach(Role::where('name', 'patient')->first());
 

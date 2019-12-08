@@ -40,6 +40,64 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
+
+                                @error('phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address">
+
+                                @error('address')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label for="hasinsurance" class="col-md-4 col-form-label text-md-right">{{ __('Insurance') }}</label></br>
+                          <div class="col-md-6">
+                            <input type="radio" name="hasinsurance" value="1" onclick="show();"> Yes
+                            <input type="radio" name="hasinsurance" value="0" onclick="hide();"> No<br>
+                          </div>
+                        </div>
+
+                        <!-- Insurance options -->
+                        <div id="insuranceoptions">
+                          <div class="form-group row">
+                            <label for="insurancecompany" class="col-md-4 col-form-label text-md-right">{{ __('Insurance Company') }}</label>
+                            <div class="col-md-6">
+                              <select class="form-control" name="insurance_company_id">
+                                @foreach ($insurancecompanies as $insurancecompany)
+                                  <option value="{{ $insurancecompany->id }}" {{ (old('insurance_company_id') == $insurancecompany->id) ? "selected" : "" }} >
+                                    {{ $insurancecompany->company_name }}
+                                  </option>
+                                @endforeach
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label for="policy_number" class="col-md-4 col-form-label text-md-right">{{ __('Policy Number') }}</label>
+                            <div class="col-md-6">
+                              <input type="text" class="form-control" id="policy_number" name="policy_number" value="{{ old('policy_number') }}" />
+                            </div>
+                          </div></br>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
@@ -73,5 +131,14 @@
             </div>
         </div>
     </div>
+    <script>
+      function hide(){
+        document.getElementById('insuranceoptions').style.display ='none';
+      }
+      function show(){
+        document.getElementById('insuranceoptions').style.display = 'block';
+      }
+      hide(); //hiding insurance options by default
+    </script>
 </div>
 @endsection

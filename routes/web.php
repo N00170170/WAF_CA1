@@ -13,7 +13,7 @@
 
 Route::get('/', 'PageController@welcome')->name('welcome');
 Route::get('/about', 'PageController@about')->name('about');
-
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 
 Auth::routes();
 
@@ -63,7 +63,6 @@ Route::get('/doctor/visits/{id}', 'Doctor\VisitController@show')->name('doctor.v
 Route::post('/doctor/visits/store', 'Doctor\VisitController@store')->name('doctor.visits.store');
 Route::get('/doctor/visits/{id}/edit', 'Doctor\VisitController@edit')->name('doctor.visits.edit');
 Route::put('/doctor/visits/{id}', 'Doctor\VisitController@update')->name('doctor.visits.update');
-Route::delete('/doctor/visits/{id}', 'Doctor\VisitController@destroy')->name('doctor.visits.destroy'); //do we need?
 Route::get('/doctor/patients/{id}/visits', 'Doctor\VisitController@visitswithpatient')->name('doctor.visits.patient.index');
 Route::get('/doctor/patients', 'Doctor\VisitController@mypatients')->name('doctor.patients.index');
 Route::get('/doctor/visits/cancel/{id}', 'Doctor\VisitController@cancel')->name('doctor.visits.cancel');
@@ -71,7 +70,6 @@ Route::get('/doctor/visits/cancel/{id}', 'Doctor\VisitController@cancel')->name(
 //Patient routes
 Route::get('/patient/visits', 'Patient\VisitController@index')->name('patient.visits.index');
 Route::get('/patient/visits/{id}', 'Patient\VisitController@show')->name('patient.visits.show');
-Route::delete('/patient/visits/{id}', 'Patient\VisitController@destroy')->name('patient.visits.destroy'); //do we need?
 Route::get('/patient/doctors', 'Patient\VisitController@mydoctors')->name('patient.doctors.index');
 Route::get('/patient/doctors/{id}/visits', 'Patient\VisitController@visitswithdoctor')->name('patient.visits.doctor.index');
 Route::get('/patient/visits/cancel/{id}', 'Patient\VisitController@cancel')->name('patient.visits.cancel');
